@@ -1,4 +1,5 @@
 # DZUIKit
+<<<<<<< HEAD
 
 [![CI Status](https://img.shields.io/travis/gitchenyuke/DZUIKit.svg?style=flat)](https://travis-ci.org/gitchenyuke/DZUIKit)
 [![Version](https://img.shields.io/cocoapods/v/DZUIKit.svg?style=flat)](https://cocoapods.org/pods/DZUIKit)
@@ -27,3 +28,6 @@ gitchenyuke, 397189536@qq.com
 ## License
 
 DZUIKit is available under the MIT license. See the LICENSE file for more info.
+=======
+开发中常用的扩展方法
+>>>>>>> 30bf7e11021fabfe7eca35f8ccb0d7f9df27d2c6
