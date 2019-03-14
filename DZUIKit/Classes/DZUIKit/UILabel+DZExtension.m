@@ -35,4 +35,17 @@
     lab.textAlignment = textAlignment;
     return lab;
 }
+
+- (UILabel *)initWithTextColor:(UIColor *)color TextFont:(CGFloat)font Text:(NSString *)text numberOfLines:(NSInteger)numberOfLines textAlignment:(NSTextAlignment)textAlignment{
+    UILabel * lab = [[UILabel alloc] initWithTextColor:color TextFont:font Text:text numberOfLines:numberOfLines];
+    lab.textAlignment = textAlignment;
+    return lab;
+}
+
+- (UILabel *)initWithTextColor:(UIColor *)color Font:(UIFont *)font{
+    UILabel * lab = [[UILabel alloc] initWithTextColor:color TextFont:15];
+    lab.font = font;
+    return lab;
+}
+
 @end

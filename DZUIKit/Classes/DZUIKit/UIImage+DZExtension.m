@@ -261,4 +261,77 @@
     return image;
 }
 
++ (UIImage *)getBlackImageWihtAlpha:(CGFloat)alpha{
+    UIColor *color=[UIColor colorWithRed:22/255.0 green:22/255.0 blue:22/255.0 alpha:alpha];
+    CGSize colorSize=CGSizeMake(1, 1);
+    UIGraphicsBeginImageContext(colorSize);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, CGRectMake(0, 0, 1, 1));
+    UIImage *img=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
+
++ (UIImage *)getImageWithAlpha:(CGFloat)alpha{
+    UIColor *color=[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:alpha];
+    CGSize colorSize=CGSizeMake(1, 1);
+    UIGraphicsBeginImageContext(colorSize);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, CGRectMake(0, 0, 1, 1));
+    UIImage *img=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
+
++ (UIImage *)generateCode:(NSString *)url{
+    //实例化二维码滤镜
+    CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+    //恢复滤镜的默认属性
+    [filter setDefaults];
+    //将字符串转化成NSData
+    NSData *data = [url dataUsingEncoding:NSUTF8StringEncoding];
+    //通过KVO设置滤镜inputMessage数据
+    [filter setValue:data forKey:@"inputMessage"];
+    //获得滤镜输出的图像
+    CIImage *outputImage = [filter outputImage];
+    UIImage *image = [self excludeFuzzyImageFromCIImage:outputImage size:200];
+    //将CIImage转化成UIImage，并放大显示
+    return image;
+}
+
+//对图像进行清晰处理
++ (UIImage *)excludeFuzzyImageFromCIImage: (CIImage *)image size: (CGFloat)size{
+    CGRect extent = CGRectIntegral(image.extent);
+    //通过比例计算，让最终的图像大小合理（正方形是我们想要的）
+    CGFloat scale = MIN(size / CGRectGetWidth(extent), size / CGRectGetHeight(extent));
+    size_t width = CGRectGetWidth(extent) * scale;
+    size_t height = CGRectGetHeight(extent) * scale;
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
+    CGContextRef bitmapRef = CGBitmapContextCreate(nil, width, height, 8, 0, colorSpace, (CGBitmapInfo)kCGImageAlphaNone);
+    CIContext * context = [CIContext contextWithOptions: nil];
+    CGImageRef bitmapImage = [context createCGImage: image fromRect: extent];
+    CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone);
+    CGContextScaleCTM(bitmapRef, scale, scale);
+    CGContextDrawImage(bitmapRef, extent, bitmapImage);
+    CGImageRef scaledImage = CGBitmapContextCreateImage(bitmapRef);
+    
+    //切记ARC模式下是不会对CoreFoundation框架的对象进行自动释放的，所以要我们手动释放
+    CGContextRelease(bitmapRef);
+    CGImageRelease(bitmapImage);
+    CGColorSpaceRelease(colorSpace);
+    return [UIImage imageWithCGImage: scaledImage];
+}
+
+/// 截屏
++ (UIImage *)actionForScreenShotWith:(UIView *)aimView {
+    if (!aimView) return nil;
+    UIGraphicsBeginImageContextWithOptions(aimView.bounds.size, NO, 0.0f);
+    [aimView.layer renderInContext: UIGraphicsGetCurrentContext()];
+    UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return viewImage;
+}
+
 @end

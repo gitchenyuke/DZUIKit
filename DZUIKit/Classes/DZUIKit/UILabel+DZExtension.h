@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (UILabel *)initWithTextColor:(UIColor *)color TextFont:(CGFloat)font Text:(NSString *)text;
 - (UILabel *)initWithTextColor:(UIColor *)color TextFont:(CGFloat)font Text:(NSString *)text numberOfLines:(NSInteger)numberOfLines;
 - (UILabel *)initWithTextColor:(UIColor *)color TextFont:(CGFloat)font Text:(NSString *)text textAlignment:(NSTextAlignment)textAlignment;
+- (UILabel *)initWithTextColor:(UIColor *)color TextFont:(CGFloat)font Text:(NSString *)text numberOfLines:(NSInteger)numberOfLines textAlignment:(NSTextAlignment)textAlignment;
+
+- (UILabel *)initWithTextColor:(UIColor *)color Font:(UIFont *)font;
 @end
 
 NS_ASSUME_NONNULL_END

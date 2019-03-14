@@ -40,6 +40,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (UIImage *)thumbnailWithImageWithoutScale:(UIImage *)image size:(CGSize)asize;
 
+/**
+ 截图
+ 
+ @param aimView 需要截图的View
+ @return 返回的图片
+ */
++ (UIImage *)actionForScreenShotWith:(UIView *)aimView;
+
 
 + (UIImage *)thumbImageWithImage:(UIImage *)scImg limitSize:(CGSize)limitSize;
 //将图片缩放到指定的CGSize大小
@@ -50,8 +58,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 //获取纯色图片
 + (UIImage *)imageWithColor:(UIColor *)color;
-
+//颜色转成图片
 + (UIImage *)dr_b_imageWithColor:(UIColor *)color;
+
+//根据透明度获取黑色图片
++ (UIImage *)getBlackImageWihtAlpha:(CGFloat)alpha;
+
+//根据透明度获取白色图片
++ (UIImage *)getImageWithAlpha:(CGFloat)alpha;
+
+//url生成二维码
++ (UIImage *)generateCode:(NSString *)url;
 @end
 
 NS_ASSUME_NONNULL_END
